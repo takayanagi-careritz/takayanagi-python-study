@@ -122,3 +122,9 @@ my-python-app
 ├ docker-compose.yaml
 └ Dockerfile
 ```
+
+上記を作成後は `pyproject.toml` が無いので initで作ってもらう  
+Dockerイメージの中で poetry コマンドを実行
+```shell
+docker compose run --entrypoint "poetry init --name my-python-app --dependency fastapi --dependency uvicorn[atandard]" my-python-app
+```
