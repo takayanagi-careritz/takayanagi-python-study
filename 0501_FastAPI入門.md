@@ -113,7 +113,9 @@ Dockerのバージョン1系と2系ではコマンドが変わる
 1系はPython、2系はGoで作られていることに起因するらしい  
 Windowsで使うときは改行コードを CRLF ⇒ LF に変えておくのを忘れない（VSCode、git）
 
-docker-composeとDockerfileを作っていく
+### 実践
+docker-composeとDockerfileを作っていく  
+（**以降は、同階層の「`my-python-app`」を参照ください🙇**）
 ```
 my-python-app
 ├ .dockerenv
