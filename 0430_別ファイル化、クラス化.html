@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>0430_別ファイル化、クラス化.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<p>少し実践的なこと学習</p>
+<h2 id="%E3%83%A2%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AB">モジュール</h2>
+<p>pyファイルを切り出す</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># sample_modu.py</span>
+num = <span class="hljs-number">123</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">increment</span><span class="hljs-params">(arg)</span>:</span>
+    <span class="hljs-keyword">return</span> arg + num
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> sample_modu
+<span class="hljs-keyword">import</span> sample_modu <span class="hljs-keyword">as</span> sample
+<span class="hljs-keyword">from</span> sample_modu <span class="hljs-keyword">import</span> increment <span class="hljs-comment"># JSと違いfromが先にくることに注意</span>
+</div></code></pre>
+<h2 id="%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8">パッケージ</h2>
+<p>複数のpyファイルを切り出す</p>
+<ul>
+<li>パッケージとなるディレクトリを用意する</li>
+<li><code>__init__.py</code> が必須</li>
+<li>パッケージ内にモジュールを置く</li>
+</ul>
+<pre class="hljs"><code><div>sample_pkg  
+  ┣ __init__.py  
+  ┗ sample_modu.py  
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment"># __init__.py</span>
+<span class="hljs-keyword">from</span> sample_pkg.sample_modu <span class="hljs-keyword">import</span> num, increment <span class="hljs-comment"># 「.」でアクセス</span>
+__all__ = [num, increment]
+</div></code></pre>
+<p>ディレクトリからimportできるようになる</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># main.py</span>
+<span class="hljs-keyword">from</span> sample_pkg <span class="hljs-keyword">import</span> *
+print(num) <span class="hljs-comment"># ⇨ 123</span>
+increment(num) <span class="hljs-comment"># ⇨ 246</span>
+</div></code></pre>
+<h2 id="%E3%82%AF%E3%83%A9%E3%82%B9">クラス</h2>
+<h3 id="%E3%82%AF%E3%83%A9%E3%82%B9%E5%AE%9A%E7%BE%A9">クラス定義</h3>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span>:</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, name=<span class="hljs-string">"yoichi"</span>, age=<span class="hljs-number">67</span>)</span>:</span> <span class="hljs-comment"># コンストラクタ</span>
+    self.name = name
+    self.age = age
+  <span class="hljs-comment"># 第一引数名には慣例的に「self」を使う</span>
+</div></code></pre>
+<h3 id="%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E5%8C%96">インスタンス化</h3>
+<pre class="hljs"><code><div>test = Test(<span class="hljs-string">"taro"</span>, <span class="hljs-number">20</span>)
+print(test.name, test.age)
+print(dir(test)) <span class="hljs-comment"># ⇨ いろいろ出る（オブジェクトクラスが継承されているから）</span>
+</div></code></pre>
+<h3 id="%E3%82%AF%E3%83%A9%E3%82%B9%E5%A4%89%E6%95%B0">クラス変数</h3>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span>:</span>
+    male = <span class="hljs-number">1</span>
+    female = <span class="hljs-number">2</span>
+
+
+test = Test()
+test.male = <span class="hljs-string">"male"</span>
+
+print(Test.male)  <span class="hljs-comment"># ⇨ 1</span>
+print(test.male)  <span class="hljs-comment"># ⇨ "male"</span>
+</div></code></pre>
+<h3 id="%E3%82%AF%E3%83%A9%E3%82%B9%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">クラスメソッド</h3>
+<p>インスタンス作らなくても実行できる<br>
+二つのうちどっちかの方法</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span>:</span>
+    count = <span class="hljs-number">0</span>
+
+    <span class="hljs-comment"># @classmethodをつける</span>
+<span class="hljs-meta">    @classmethod</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">inc_count</span><span class="hljs-params">(cls)</span>:</span> <span class="hljs-comment"># 第一引数名には慣例的に「cls」を使う</span>
+        cls.count += <span class="hljs-number">1</span>
+
+    <span class="hljs-comment"># classmethod()を使う</span>
+    dec_count = classmethod(<span class="hljs-keyword">lambda</span> cls: cls.count - <span class="hljs-number">1</span>)
+
+Test.inc_count()
+Test.dec_count()
+</div></code></pre>
+<h3 id="%E3%82%B9%E3%82%BF%E3%83%86%E3%82%A3%E3%83%83%E3%82%AF%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">スタティックメソッド</h3>
+<pre class="hljs"><code><div><span class="hljs-meta">@staticmethod</span>
+staticmethod()
+<span class="hljs-comment"># 用途がよくわからない、ヘルパー的な切り出しで使う？ ← だったらモジュールでいいのでは？</span>
+</div></code></pre>
+<h3 id="%E5%A4%89%E6%95%B0%E3%81%AE%E3%83%97%E3%83%A9%E3%82%A4%E3%83%99%E3%83%BC%E3%83%88%E5%8C%96">変数のプライベート化</h3>
+<p>慣例的に変数名には__をつける</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self,age=<span class="hljs-number">20</span>)</span>:</span>
+        self.__age = age
+    
+    age = property(
+        <span class="hljs-keyword">lambda</span> self:self.__age,
+        <span class="hljs-keyword">lambda</span> self,value:self.__age = value <span class="hljs-comment"># これエラーになる</span>
+        <span class="hljs-comment"># lambda式の中は「式」ではダメらしい、「処理」を書く</span>
+    )
+
+    <span class="hljs-comment"># これならできる、ただそもそもここでlambdaを使うことがナンセンスぽい</span>
+    age = property(
+        <span class="hljs-keyword">lambda</span> self: self.__age,
+        <span class="hljs-keyword">lambda</span> self, value: setattr(self, <span class="hljs-string">"__age"</span>, value),
+    )
+
+<span class="hljs-comment"># 正解例１ ############################</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_age</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">return</span> self.__age
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">set_age</span><span class="hljs-params">(self, value)</span>:</span>
+        self.__age = value
+
+    age = property(get_age, set_age)
+<span class="hljs-comment"># 正解例２ ############################</span>
+<span class="hljs-meta">    @property</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">age</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">return</span> self.__age
+
+<span class="hljs-meta">    @age.setter</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">age</span><span class="hljs-params">(self, value)</span>:</span>
+        self.__age = value
+</div></code></pre>
+<h3 id="%E3%82%AF%E3%83%A9%E3%82%B9%E3%81%AE%E7%B6%99%E6%89%BF">クラスの継承</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">## script2.py #############################</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, name, age)</span>:</span>
+        self.name = name
+        self.age = age
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hello</span><span class="hljs-params">(self)</span>:</span>
+        print(<span class="hljs-string">f'name:<span class="hljs-subst">{self.name}</span>、age:<span class="hljs-subst">{self.age}</span>'</span>)
+
+<span class="hljs-comment">## script.py #############################</span>
+<span class="hljs-keyword">from</span> script2 <span class="hljs-keyword">import</span> Person
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span><span class="hljs-params">(Person)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, name, age, grade)</span>:</span>
+        super().__init__(name, age)
+        self.grade = grade
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hello</span><span class="hljs-params">(self)</span>:</span> <span class="hljs-comment"># オーバーライド</span>
+        super().hello()
+        print(<span class="hljs-string">f"grade:<span class="hljs-subst">{self.grade}</span>"</span>)
+
+
+student = Student(<span class="hljs-string">"高柳"</span>, <span class="hljs-number">67</span>, <span class="hljs-number">3</span>)
+
+student.hello()
+</div></code></pre>
+<h3 id="%E5%A4%9A%E9%87%8D%E7%B6%99%E6%89%BF%E8%A4%87%E6%95%B0%E7%B6%99%E6%89%BF">多重継承、複数継承</h3>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>:</span>
+    <span class="hljs-keyword">pass</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span><span class="hljs-params">(Person)</span>:</span>
+    <span class="hljs-keyword">pass</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SoccerMember</span><span class="hljs-params">(Student)</span>:</span>
+    <span class="hljs-keyword">pass</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Forward</span><span class="hljs-params">(SoccerMember, Person)</span>:</span>
+    <span class="hljs-keyword">pass</span>
+
+<span class="hljs-comment"># この時、オーバーライド等優先されるのは</span>
+<span class="hljs-comment"># Forward ＞ SoccerMember ＞ Person ＞ Student</span>
+<span class="hljs-comment"># つまり、孫 ＞ 子１ ＞ 子２ ＞ 子１の親 ＞ 小２の親 となっていく</span>
+<span class="hljs-comment"># 「メソッド解決順」というらしい</span>
+print(Forward.__mro__) <span class="hljs-comment"># メソッド解決順を確認できる（Method Resolution Order）</span>
+</div></code></pre>
+<h3 id="mixin">mixin</h3>
+<p>interface的な<strong>概念</strong>のこと<br>
+継承元でメソッド名だけ定義<br>
+継承先でオーバーライド<br>
+多重継承で使うのがいいらしい<br>
+が、そもそも多重継承使いたくない、使用頻度高い？</p>
+<h2 id="%E4%BE%8B%E5%A4%96">例外</h2>
+<pre class="hljs"><code><div><span class="hljs-keyword">try</span>: <span class="hljs-comment"># tryブロック内でエラー出たら拾える</span>
+    <span class="hljs-keyword">raise</span> 例外クラス１ <span class="hljs-comment"># 自発でエラー発生</span>
+<span class="hljs-keyword">except</span> 例外クラス１:
+    処理
+<span class="hljs-keyword">else</span>: <span class="hljs-comment"># 例外でなかった時の処理</span>
+    処理
+<span class="hljs-keyword">finally</span>: <span class="hljs-comment"># 必ず通る処理</span>
+    処理
+</div></code></pre>
+
+</body>
+</html>

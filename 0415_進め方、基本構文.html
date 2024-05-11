@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>0415_進め方、基本構文.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<p>4/15~スタート</p>
+<h2 id="%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB">はじめに</h2>
+<p>学習の進め方、特徴</p>
+<h3 id="python-%E6%A6%82%E8%A6%81">Python 概要</h3>
+<ol>
+<li>学習環境の構築</li>
+<li>基本構文の習得</li>
+<li><a href="https://www.shoeisha.co.jp/book/detail/9784798177229">書籍</a>に従ってデプロイまで手を動かしてみる（購入済）</li>
+<li>自作 API サーバー作成</li>
+<li>自作フロントエンドと疎通</li>
+</ol>
+<h3 id="%E7%89%B9%E5%BE%B4">特徴</h3>
+<ul>
+<li>他のプログラミング言語と比べ、シンプルで覚えることが少ない←構文は</li>
+<li>Python 向け外部ライブラリが豊富</li>
+<li>活躍の範囲が広い（アプリ、Web、AI など）</li>
+<li>インデントによりブロックを判断する</li>
+</ul>
+<h3 id="javascript-%E3%81%A8%E3%81%AE%E9%81%95%E3%81%84">JavaScript との違い</h3>
+<ul>
+<li>変数名はスネークケース</li>
+<li>違う型同士の足し算はエラー</li>
+<li>インデントでブロックを表現</li>
+<li>再代入 OK</li>
+<li>タプル型、セット型（集合）</li>
+<li>（気づき次第追記）</li>
+</ul>
+<h3 id="%E7%89%B9%E7%AD%86%E3%81%97%E3%81%9F%E3%81%84javascript-%E3%81%A8%E3%81%AE%E5%85%B1%E9%80%9A%E7%82%B9">（特筆したい）JavaScript との共通点</h3>
+<ul>
+<li>動的型付け</li>
+<li>スコープの仕組み（ローカル ＞ グローバル ＞ ビルトイン）</li>
+<li>配列=リスト、オブジェクト=辞書、← これら要素の操作も楽</li>
+<li>クラスへの変数追加はインスタンス後にでもできちゃう（未定義でも）</li>
+<li>（気づき次第追記）</li>
+</ul>
+<h2 id="%E5%AD%A6%E7%BF%92%E7%92%B0%E5%A2%83%E3%81%AE%E6%A7%8B%E7%AF%89">学習環境の構築</h2>
+<p>https://prog-8.com/docs/python-env-win<br>
+これに従って、python をインストール、ターミナルで動かせることを確認<br>
+これからはVSCode使う</p>
+<h3 id="vscode-%E6%8B%A1%E5%BC%B5%E6%A9%9F%E8%83%BD">VSCode 拡張機能</h3>
+<ul>
+<li>Python</li>
+<li>Code Runner（ソース実行）</li>
+<li>Black Formatter（整形）</li>
+<li>Python Indent（自動でインデントしてくれる）</li>
+<li>Codeium（AI コード補完）← 学習のためには無くてもよかったかも、、、</li>
+</ul>
+<h2 id="%E5%9F%BA%E6%9C%AC%E6%A7%8B%E6%96%87">基本構文</h2>
+<h3 id="%E3%82%B3%E3%83%B3%E3%82%BD%E3%83%BC%E3%83%AB%E8%A1%A8%E7%A4%BA">コンソール表示</h3>
+<p>print()でコンソールに表示<br>
+input()でコンソール入力待機</p>
+<pre class="hljs"><code><div>pirnt(<span class="hljs-string">"あああああ"</span>)
+sampe = input(<span class="hljs-string">"入力して⇒"</span>) <span class="hljs-comment"># 文字列で受け取る</span>
+</div></code></pre>
+<h3 id="%E3%82%B3%E3%83%A1%E3%83%B3%E3%83%88%E3%82%A2%E3%82%A6%E3%83%88">コメントアウト</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># aaaa</span>
+</div></code></pre>
+<h3 id="%E5%A4%89%E6%95%B0%E5%AE%9A%E7%BE%A9">変数定義</h3>
+<p>型は暗黙で決まるらしい</p>
+<pre class="hljs"><code><div>変数名 = <span class="hljs-string">"AAAA"</span>
+変数名: int = <span class="hljs-number">10</span> <span class="hljs-comment"># 明示的</span>
+</div></code></pre>
+<h3 id="%E9%96%A2%E6%95%B0%E5%AE%9A%E7%BE%A9">関数定義</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> 関数名<span class="hljs-params">()</span>:</span>
+  処理
+  処理
+</div></code></pre>
+<h3 id="%E4%B8%89%E9%A0%85%E6%BC%94%E7%AE%97%E5%AD%90">三項演算子</h3>
+<pre class="hljs"><code><div>真の値 <span class="hljs-keyword">if</span> 条件 <span class="hljs-keyword">else</span> 偽の値
+ans = <span class="hljs-string">'Even'</span> <span class="hljs-keyword">if</span> num % <span class="hljs-number">2</span> == <span class="hljs-number">0</span> <span class="hljs-keyword">else</span> <span class="hljs-string">'Odd'</span>
+</div></code></pre>
+<h3 id="%E6%96%87%E5%AD%97%E5%88%97%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88">文字列フォーマット</h3>
+<pre class="hljs"><code><div>print(<span class="hljs-string">f'<span class="hljs-subst">{num3}</span> is <span class="hljs-subst">{ans3}</span>'</span>) <span class="hljs-comment">#           python3.6以降</span>
+print(<span class="hljs-string">'{} is {}'</span>.format(num3, ans3)) <span class="hljs-comment"># python3.5以下</span>
+<span class="hljs-comment"># JSでは `${num3} is ${ans3}` でおなじみ</span>
+</div></code></pre>
+<p>トリプルクォートで改行したりして出せる</p>
+<pre class="hljs"><code><div>str = <span class="hljs-string">"""あ\nい\tう"""</span>
+
+<span class="hljs-meta">&gt;&gt;&gt; </span>print(str)
+あ
+い      う
+</div></code></pre>
+<h3 id="%E5%9F%BA%E6%9C%AC%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">基本メソッド</h3>
+<p>文字列検索、ちょっと特殊</p>
+<pre class="hljs"><code><div><span class="hljs-string">"abcdefabcdef"</span>.find(<span class="hljs-string">"cd"</span>) <span class="hljs-comment"># ⇒ 最初にヒットしたidx</span>
+<span class="hljs-string">"abcdefabcdef"</span>.rfind(<span class="hljs-string">"cd"</span>) <span class="hljs-comment"># ⇒ 最後にヒットしたidx</span>
+index() <span class="hljs-comment"># ⇒ findと同じ、見つからなかったらエラーになる</span>
+rindex() <span class="hljs-comment"># ⇒ 同上</span>
+</div></code></pre>
+<p>判定、isXXX()</p>
+<pre class="hljs"><code><div>isdigit() <span class="hljs-comment"># 数字、真偽値</span>
+isalpha() <span class="hljs-comment"># 英字、真偽値</span>
+isalnum() <span class="hljs-comment"># 英数字、真偽値</span>
+isupport() <span class="hljs-comment"># 大文字のみか、真偽値</span>
+islower() <span class="hljs-comment"># 小文字のみか、真偽値</span>
+</div></code></pre>
+<p>置換</p>
+<pre class="hljs"><code><div>sample = <span class="hljs-string">"asdfjkl;"</span>
+sample = sample.replace(<span class="hljs-string">"sdf"</span>,<span class="hljs-string">"wer"</span>) <span class="hljs-comment"># 非破壊的であることに注意</span>
+</div></code></pre>
+<p>その他文字列操作や文字数取得等は都度調べればいいので割愛</p>
+<pre class="hljs"><code><div>（面白いのあったら記入）
+</div></code></pre>
+<h3 id="%E6%9D%A1%E4%BB%B6%E4%B8%94%E3%81%A4%E5%8F%88%E3%81%AF">条件（且つ、又は）</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">if</span> num % <span class="hljs-number">3</span> == <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> num % <span class="hljs-number">5</span> == <span class="hljs-number">0</span> <span class="hljs-keyword">or</span> ~~~:
+<span class="hljs-keyword">elif</span> num % <span class="hljs-number">3</span> == <span class="hljs-number">0</span>: <span class="hljs-comment"># else if ⇒ elif</span>
+<span class="hljs-keyword">else</span>
+</div></code></pre>
+<h3 id="%E3%83%AB%E3%83%BC%E3%83%97for-while">ループ（for, while）</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">for</span> ch <span class="hljs-keyword">in</span> <span class="hljs-string">"abcdef"</span>:
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">10</span>): <span class="hljs-comment"># range()はリストを返す</span>
+  print(i, end=<span class="hljs-string">"---"</span>) <span class="hljs-comment"># end=末尾につける文字、デフォは改行コード</span>
+<span class="hljs-comment"># ↑ ちなみに「sep=」は引数カンマ区切りの時の文字、デフォは半角スペース</span>
+
+<span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>]:
+
+<span class="hljs-keyword">while</span> num &lt; <span class="hljs-number">5</span>:
+  print(num, end=<span class="hljs-string">" "</span>)
+  num+=<span class="hljs-number">1</span>
+</div></code></pre>
+<h3 id="%E3%82%A2%E3%83%B3%E3%83%91%E3%83%83%E3%82%AF">アンパック</h3>
+<p>引数のアンパック、基本の型の説明も軽く</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">argMerger</span><span class="hljs-params">(arg1, arg2, arg3)</span>:</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-string">f"<span class="hljs-subst">{arg1}</span> <span class="hljs-subst">{arg2}</span> <span class="hljs-subst">{arg3}</span>"</span>
+
+print(argMerger(*<span class="hljs-string">"abd"</span>))  <span class="hljs-comment"># ⇒ "a b c"（文字列）</span>
+print(argMerger(*[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]))  <span class="hljs-comment"># ⇒ "1 2 3"（リスト）</span>
+print(argMerger(*[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]))  <span class="hljs-comment"># ⇒ エラーになる</span>
+
+print(argMerger(*(<span class="hljs-number">11</span>, <span class="hljs-number">22</span>, <span class="hljs-number">33</span>)))  <span class="hljs-comment"># ⇒ "11 22 33"（タプル型）</span>
+<span class="hljs-comment"># まるかっこカンマ区切り、もしくはカンマ区切りはタプル型という</span>
+<span class="hljs-comment"># タプル型の要素は変更できない、不変にしたい定義で使う（定数辞書とか）</span>
+
+print(argMerger(*{<span class="hljs-string">"a"</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-string">"a"</span>,<span class="hljs-number">2</span>})) <span class="hljs-comment"># ⇒ "a 1 2"</span>
+<span class="hljs-comment"># 中括弧区切りでセット型（集合）</span>
+<span class="hljs-comment"># 重複を許さない、リストは要素にできない（可変なので）</span>
+<span class="hljs-comment"># 追加,削除,その他「集合」ができるような所作には関数が用意されてる</span>
+
+print(argMerger(**{<span class="hljs-string">"arg1"</span>: <span class="hljs-number">4</span>, <span class="hljs-string">"arg2"</span>: <span class="hljs-number">5</span>, <span class="hljs-string">"arg3"</span>: <span class="hljs-number">6</span>}))  <span class="hljs-comment"># ⇒ "4 5 6"（辞書型）</span>
+<span class="hljs-comment"># 辞書型は**２つ！、キーは引数名と同じでないとエラー！</span>
+
+</div></code></pre>
+<p>タプルのアンパック</p>
+<pre class="hljs"><code><div>tuple1 = (<span class="hljs-string">"yoichi"</span>, <span class="hljs-string">"takayanagi"</span>, <span class="hljs-string">"78"</span>)
+first_name = tuple1[<span class="hljs-number">0</span>] <span class="hljs-comment"># 例１</span>
+first_name, last_name, age = tuple1 <span class="hljs-comment"># 例2</span>
+
+print(first_name, last_name, age)
+</div></code></pre>
+<p>辞書の要素取得</p>
+<pre class="hljs"><code><div>dict_sample[<span class="hljs-string">"key1"</span>]
+dict_sample.get(<span class="hljs-string">"key1"</span>) <span class="hljs-comment"># 無くてもエラーにならない！</span>
+</div></code></pre>
+<p>引数のデフォ値</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sample</span><span class="hljs-params">(arg1=<span class="hljs-number">0</span>, arg2=<span class="hljs-number">1</span>, arg3=<span class="hljs-number">2</span>)</span>:</span>
+    print(<span class="hljs-string">f"<span class="hljs-subst">{arg1}</span>, <span class="hljs-subst">{arg2}</span>, <span class="hljs-subst">{arg3}</span>"</span>)
+
+
+sample()  <span class="hljs-comment"># 0, 1, 2</span>
+sample(<span class="hljs-string">"A"</span>)  <span class="hljs-comment"># A, 1, 2</span>
+sample(arg2=<span class="hljs-string">"b"</span>)  <span class="hljs-comment"># 0, b, 2　#２個目のみ指定もできる</span>
+<span class="hljs-comment"># ↑ printの sep= ,end= もこれ</span>
+<span class="hljs-comment"># 注意：１つデフォ指定したら全部しないとだめ</span>
+
+</div></code></pre>
+<h3 id="%E3%83%A9%E3%83%A0%E3%83%80%E5%BC%8F">ラムダ式</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">lambda</span> 引数: 式
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">normal_func</span><span class="hljs-params">(arg)</span>:</span>
+    print(arg)
+<span class="hljs-comment"># ↓</span>
+lambda_func = <span class="hljs-keyword">lambda</span> arg: print(arg) <span class="hljs-comment"># アロー文みたい</span>
+<span class="hljs-comment"># 注意：ただこの使い方は非推奨らしい、推奨は関数を引数にするとき</span>
+<span class="hljs-comment"># lambdaは一つの値としての扱い？</span>
+
+result = filter(<span class="hljs-keyword">lambda</span> x : x%<span class="hljs-number">2</span>==<span class="hljs-number">0</span>, [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>])
+<span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> result:
+    print(item, end=<span class="hljs-string">", "</span>)
+
+</div></code></pre>
+<h3 id="%E5%86%85%E5%8C%85%E8%A1%A8%E8%A8%98">内包表記</h3>
+<p>上のを書き換え</p>
+<pre class="hljs"><code><div>[（itemに対する処理） <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> result <span class="hljs-keyword">if</span>（取得条件）]
+
+result = [x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>] <span class="hljs-keyword">if</span> x % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>]
+<span class="hljs-comment"># 右に条件があると、リストに要素を含む前に条件適用（フィルタリング条件）</span>
+
+result2 = [<span class="hljs-string">'odd'</span> <span class="hljs-keyword">if</span> x % <span class="hljs-number">2</span> <span class="hljs-keyword">else</span> <span class="hljs-string">'even'</span> <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">6</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>]]
+<span class="hljs-comment"># 左に条件があると、要素を置き換える</span>
+
+<span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> [[y*x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, <span class="hljs-number">10</span>)] <span class="hljs-keyword">for</span> y <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, <span class="hljs-number">10</span>)]:
+    print(item)
+<span class="hljs-comment"># 九九作ってみる</span>
+
+person_dict = {name: age <span class="hljs-keyword">for</span> name, age <span class="hljs-keyword">in</span> zip([<span class="hljs-string">"taro"</span>, <span class="hljs-string">"jiro"</span>, <span class="hljs-string">"hanako"</span>], [<span class="hljs-number">20</span>, <span class="hljs-number">30</span>, <span class="hljs-number">40</span>])} <span class="hljs-comment"># 辞書の内包表記</span>
+<span class="hljs-comment"># ⇨ {'taro': 20, 'jiro': 30, 'hanako': 40}</span>
+
+nums = {x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> range(<span class="hljs-number">10</span>)} <span class="hljs-comment"># 集合の内包表記</span>
+</div></code></pre>
+<h2 id="%E5%BE%A9%E7%BF%92fizzbuzz-%E4%BD%9C%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B">復習（FizzBuzz 作ってみる）</h2>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_fizz_buzz</span><span class="hljs-params">(num)</span>:</span>
+    <span class="hljs-keyword">if</span> num % <span class="hljs-number">3</span> == <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> num % <span class="hljs-number">5</span> == <span class="hljs-number">0</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"FizzBuzz"</span>
+    <span class="hljs-keyword">elif</span> num % <span class="hljs-number">3</span> == <span class="hljs-number">0</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"Fizz"</span>
+    <span class="hljs-keyword">elif</span> num % <span class="hljs-number">5</span> == <span class="hljs-number">0</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"Buzz"</span>
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"何でもない"</span>
+
+
+input_num_list = [int(char) <span class="hljs-keyword">for</span> char <span class="hljs-keyword">in</span> input(<span class="hljs-string">"カンマ区切りで数字入れて ⇒ "</span>).split(<span class="hljs-string">","</span>)]
+
+result = [get_fizz_buzz(num) <span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> input_num_list]
+
+<span class="hljs-keyword">for</span> i, item <span class="hljs-keyword">in</span> enumerate(result, start=<span class="hljs-number">1</span>):
+    print(<span class="hljs-string">f"<span class="hljs-subst">{i}</span>回目：<span class="hljs-subst">{item}</span>"</span>)
+
+<span class="hljs-comment"># 1回目：何でもない</span>
+<span class="hljs-comment"># 2回目：何でもない</span>
+<span class="hljs-comment"># 3回目：Buzz</span>
+<span class="hljs-comment"># 4回目：何でもない</span>
+<span class="hljs-comment"># 5回目：何でもない</span>
+<span class="hljs-comment"># 6回目：Fizz</span>
+<span class="hljs-comment"># 7回目：何でもない</span>
+<span class="hljs-comment"># 8回目：FizzBuzz</span>
+<span class="hljs-comment"># 9回目：Buzz</span>
+
+<span class="hljs-comment"># ↑ 複数行コメントアウトはトリプルクォートでできると紹介されてるが、文字列評価なのでよくないのでは？</span>
+</div></code></pre>
+
+</body>
+</html>
