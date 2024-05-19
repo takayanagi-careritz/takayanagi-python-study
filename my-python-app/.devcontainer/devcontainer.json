@@ -1,0 +1,29 @@
+{
+  "name": "my-python-app",
+  "dockerComposeFile": [
+    "docker-compose.yaml"
+  ],
+  "service": "my-python-app",
+  "workspaceFolder": "/src",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "[python]": {
+          "editor.defaultFormatter": "ms-python.black-formatter"
+        }
+      },
+      "extensions": [
+        "MS-CEINTL.vscode-language-pack-ja",
+        "ms-python.black-formatter",
+        "KevinRose.vsc-python-indent",
+        "formulahendry.code-runner",
+        "mhutchie.git-graph",
+        "eamodio.gitlens",
+        "ms-python.vscode-pylance",
+        "ms-python.python",
+        "ms-python.debugpy",
+        "Codeium.codeium"
+      ]
+    }
+  }
+}

@@ -11,7 +11,7 @@ WORKDIR /src
 
 # RUNはビルド時コマンドを実行する
 # pipはPythonのパッケージ管理ツール、poetryもそう、これらとvenvとの違いがよくわからない、、、
-# ↓ npm で yarn 入れる的なことをしてる？
+# ⇒ pipはパッケージ管理をするもの、poetryはenv環境管理をするもの、venvは仮想環境を作成するもの
 RUN pip install poetry
 
 # package.json と package-lock.jsonみたいな、これをカレントにコピー
