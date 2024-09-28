@@ -21,7 +21,7 @@ COPY pyproject.toml* poetry.lock* ./
 # venvはローカルで仮想環境が必要だから使う？
 RUN poetry config virtualenvs.in-project true
 # pyprojectがあるならインストール、fiは条件分岐を終わり
-RUN if [ -f pyproject.toml ]; then poetry install --no-root; fi
+RUN if [ -f ../pyproject.toml ]; then poetry install --no-root; fi
 
 # ENTRYPOINTは起動時コマンドを実行する、RUNはビルド時！こっちはコンテナ起動時！つまり毎回！
 # poetry run uvicorn api.main:app --host 0.0.0.0 --reload
