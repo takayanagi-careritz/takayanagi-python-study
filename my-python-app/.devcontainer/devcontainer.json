@@ -1,16 +1,14 @@
 {
   "name": "my-python-app",
-  "dockerComposeFile": [
-    "docker-compose.yaml"
-  ],
+  "dockerComposeFile": ["docker-compose.yaml"],
   "service": "my-python-app",
   "workspaceFolder": "/src",
   "customizations": {
     "vscode": {
       "settings": {
-        "[python]": {
-          "editor.defaultFormatter": "ms-python.black-formatter"
-        }
+        // "[python]": {
+        //   "editor.defaultFormatter": "ms-python.black-formatter"
+        // }
       },
       "extensions": [
         "MS-CEINTL.vscode-language-pack-ja",
@@ -25,5 +23,6 @@
         "Codeium.codeium"
       ]
     }
-  }
+  },
+  "postCreateCommand": "echo '{\"[python]\": {\"editor.defaultFormatter\": \"ms-python.black-formatter\"}}' > /root/.vscode/settings.json"
 }

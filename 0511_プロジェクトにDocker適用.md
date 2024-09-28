@@ -95,7 +95,7 @@ docker compose build
 上記を作成後は `pyproject.toml` が無いので initで作ってもらう  
 Dockerイメージの中で poetry コマンドを実行
 ```shell
-docker compose run --entrypoint "poetry init --name my-python-app --dependency fastapi --dependency uvicorn[atandard]" my-python-app
+docker compose run --entrypoint "poetry init --name my-python-app --dependency fastapi --dependency uvicorn[standard]" my-python-app
 ```
 
 パッケージインストール、.lockファイルも作られることを確認
@@ -106,15 +106,15 @@ docker compose run --entrypoint "poetry install --no-root" my-python-app
 <br>
 
 せっかくVSCode使っているので、Dev Conatainersで構築できるよう変更  
-- Dev Containers：イメージ作成からコンテナ立ち上げまで一括で行うツール  
+- Dev Containers：コンテナ立ち上げをVSCodeで行うツール  
 
 vscodeの設定や拡張機能も、devcontainerで共通管理可能
 
 <details>
 <summary>devcontainer.json</summary>
 
-```jsonc
-// devcontainer.jsonc
+```json
+// devcontainer.json
 {
   "name": "my-python-app",
   "dockerComposeFile": [
