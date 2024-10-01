@@ -5,9 +5,13 @@
 
 ### 動かし方
 1. 「my-python-app/.devcontainer」に移動  
-    `cd my-python-app/.devcontainer`
+    ```sh
+    cd my-python-app/.devcontainer
+    ```
 1. イメージ作成する  
-    `docker compose build`
+    ```sh
+    docker compose build
+    ```
 1. ~~pyproject.toml を作る~~  →  gitにあげてるので不要、次の手順へ  
     pyproject.toml: package.json的なやつ
     ```sh
