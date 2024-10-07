@@ -26,5 +26,4 @@ RUN if [ -f ../pyproject.toml ]; then poetry install --no-root; fi
 # ENTRYPOINTは起動時コマンドを実行する、RUNはビルド時！こっちはコンテナ起動時！つまり毎回！
 # poetry run uvicorn api.main:app --host 0.0.0.0 --reload
 # uvicorn はAPIサーバーを立ち上げるためのもの、ASGI（Asynchronous Server Gateway Interface）：非同期サーバーゲートウェイインターフェース
-# 深井さんが言っていたPythonでの非同期というやつ？
 ENTRYPOINT ["poetry", "run", "uvicorn", "api.main:app", "--host", "0.0.0.0", "--reload"]

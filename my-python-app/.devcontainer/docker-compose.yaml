@@ -17,3 +17,19 @@ services:
       - "8000:8000" # ホストの8000をdockerの8000に接続
     environment: # 環境変数の設定場所
       - WATCHFILES_FORCE_POLLING=true # ホットリロード設定ON
+
+  db:
+    image: mysql:8.0 # 上とは違いDockerFileではなく用意されてるImageを使う
+    platform: linux/x86_64 # いろんなMacのチップに対応できる
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes" # パスワードなしでOK設定
+      MYSQL_DATABASE: "demo"
+      TZ: "Asia/Tokyo"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password # 認証方法をちょっと古い方法に指定
+    ports:
+      - 33306:3306 # ホストの33306をDockerの3306に接続、今回のFastAPIからアクセスするなら3306を見る
+      
+volumes:
+  mysql_data: # ボリュームの名前だけを定義

@@ -6,9 +6,9 @@
   "customizations": {
     "vscode": {
       "settings": {
-        // "[python]": {
-        //   "editor.defaultFormatter": "ms-python.black-formatter"
-        // }
+        "[python]": {
+          "editor.defaultFormatter": "ms-python.black-formatter"
+        }
       },
       "extensions": [
         "MS-CEINTL.vscode-language-pack-ja",
@@ -23,6 +23,6 @@
         "Codeium.codeium"
       ]
     }
-  },
-  "postCreateCommand": "echo '{\"[python]\": {\"editor.defaultFormatter\": \"ms-python.black-formatter\"}}' > /root/.vscode/settings.json"
+  }
+  // "postCreateCommand": "echo '{\"[python]\": {\"editor.defaultFormatter\": \"ms-python.black-formatter\"}}' > /root/.vscode/settings.json"
 }
