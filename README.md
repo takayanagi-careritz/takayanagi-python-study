@@ -32,5 +32,9 @@
     ```
 
 4. コンテナ作成
+
+    ```sh
+    docker compose up
+    ```
 </details>
 
