@@ -28,7 +28,7 @@ volumes:
 
 DBのコンテナ上げれた後に接続確認する
 ```sh
-docker exec -it my-python-app_devcontainer-db-1 
+docker exec -it my-python-app_devcontainer-db-1 mysql
 ```
 できた
 
@@ -36,5 +36,15 @@ docker exec -it my-python-app_devcontainer-db-1
 docker compose exec db mysql demo
 ```
 ↑ これでもできるはずなのにできない、  
-docker composeで立ち上げていないから、、、？  
-docker ps でサービスが上がっていることは確認したのに
+~~docker composeで立ち上げていないから、、、？  
+docker ps でサービスが上がっていることは確認したのに~~  
+
+（10/17）  
+
+docker compose ~~ は docker compose up を使って起動したコンテナ内でコマンドを実行  
+注意すべきはdocker-compose.yamlに記載したサービス名を指定するということ
+
+一方 -it は、上がっているコンテナに対し一時的にコマンドを入れられるモード（インタラクティブオプションとターミナルオプション）  
+こっちはコンテナ名を指定する
+
+docker exec は docker-compose を使っていなくても機能するが、docker compose exec は docker-compose.yml で定義されたサービスを前提にしている！
