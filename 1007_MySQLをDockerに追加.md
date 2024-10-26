@@ -28,7 +28,7 @@ volumes:
 
 DBのコンテナ上げれた後に接続確認する
 ```sh
-docker exec -it my-python-app_devcontainer-db-1 mysql
+docker exec -it my-python-app_devcontainer-db-1 mysql demo
 ```
 できた
 

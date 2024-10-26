@@ -20,7 +20,9 @@
         "ms-python.vscode-pylance",
         "ms-python.python",
         "ms-python.debugpy",
-        "Codeium.codeium"
+        "Codeium.codeium",
+        "tonybaloney.vscode-pets",
+        "nemesv.copy-file-name"
       ]
     }
   }

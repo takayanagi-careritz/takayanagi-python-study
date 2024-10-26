@@ -1,5 +1,8 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 import api.schemas.tasks as task_schemas
+from sqlalchemy.orm import Session
+from api.db import get_db
+import api.cruds.task as task_crud
 
 router = APIRouter()  # インスタンス生成
 
@@ -12,18 +15,13 @@ async def list_tasks():
     result = [task_schemas.TaskGetResponse(id=1, title="ダミーデータ")]
     return result
 
-
-# ↑「list」って英単語は動詞的な扱いできるらしい、、、？
-# キーワード引数を使うことによって引数の順番を気にしなくていい
-
-
+# Depends -> 噂のDI（依存性注入）、これをすることでテスト環境のDBセッションとかを入れられる
+# 密結合すぎる状態を防いでる（＝依存性注入）
 @router.post("/tasks", response_model=task_schemas.TaskCreateResponse)
-async def create_task(task_body: task_schemas.TaskCreate):
-    # DBに保存
-    result = task_schemas.TaskCreateResponse(
-        id=1, **task_body.model_dump()  # 残余引数こう書ける
-    )
-    return result
+async def create_task(task_body: task_schemas.TaskCreate, db: Session=Depends(get_db)):
+    return task_crud.create_task(db, task_body)
+    # 戻りの型は DBの型「task_model.Task」のはずなのに、スキーマの型「task_schemas.TaskCreateResponse」が返る
+    # これは、task_schemas.TaskCreateResponseに「orm_mode = True」を付けたからである、不思議
 
 
 # task_idについて、パスパラメータと引数の変数名を合わせることで関数内で使える

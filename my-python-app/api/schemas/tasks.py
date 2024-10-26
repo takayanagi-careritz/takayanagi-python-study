@@ -10,7 +10,7 @@ class TaskCreate(TaskBase):
 class TaskCreateResponse(TaskCreate):
     id: int
     class Config:
-        orm_mode = True
+        orm_mode = True # DBの型をスキーマの型にしてくれる
 
 class TaskGetResponse(TaskBase):
     id: int
